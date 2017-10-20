@@ -1,2 +1,2 @@
-# ctoolkit-rest-skeleton
-Cloud Toolkit REST archetype based on the Google Cloud Endpoints Frameworks for App Engine standard environment
+# Cloud Toolkit Microservice - Archetype
+TurnOnline.biz Ecosystem: Cloud Toolkit Microservice based on the Google Cloud Endpoints Frameworks (REST) for App Engine Java standard environment
