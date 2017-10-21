@@ -6,7 +6,8 @@
         xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0">
 
     <requiredProperties>
-        <requiredProperty key="AppEnginesServiceName"/>
+        <requiredProperty key="MyServiceName"/>
+        <requiredProperty key="ProjectId"/>
     </requiredProperties>
 
     <fileSets>

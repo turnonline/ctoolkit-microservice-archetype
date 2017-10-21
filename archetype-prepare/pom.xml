@@ -72,6 +72,26 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-gitignore</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <!--by default .gitignore is being excluded so configuration has changed to get it -->
+                            <addDefaultExcludes>false</addDefaultExcludes>
+                            <outputDirectory>${archetype-resources-path}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/..</directory>
+                                    <includes>
+                                        <include>.gitignore</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <!-- Additional configuration -->
@@ -97,6 +117,21 @@
                                 <remove>
                                     <name>/pom:project/pom:properties/pom:maven.deploy.skip</name>
                                 </remove>
+                                <remove>
+                                    <name>/pom:project/pom:properties/pom:endpoints.project.id</name>
+                                </remove>
+                                <modify>
+                                    <name>/pom:project/pom:properties/pom:endpoints.project.name/text()</name>
+                                    <!--suppress MavenModelInspection -->
+                                    <value>${ProjectId}.appspot.com</value>
+                                </modify>
+                                <modify>
+                                    <name>
+                                        /pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='endpoints-framework-maven-plugin']/pom:configuration/pom:serviceClasses/pom:serviceClass/text()
+                                    </name>
+                                    <!--suppress MavenModelInspection -->
+                                    <value>${package}.api.MessageEndpoint</value>
+                                </modify>
                                 <add>
                                     <before>/pom:project/pom:modelVersion</before>
                                     <value>
@@ -122,7 +157,7 @@
                                 <modify>
                                     <name>/app:appengine-web-app/app:service/text()</name>
                                     <!--suppress MavenModelInspection -->
-                                    <value>${AppEnginesServiceName}</value>
+                                    <value>${MyServiceName}</value>
                                 </modify>
                             </rules>
                         </transformation>
