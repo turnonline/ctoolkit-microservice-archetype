@@ -1,4 +1,4 @@
-package org.ctoolkit.microservice.origin.config;
+package org.ctoolkit.microservice.origin.guice;
 
 import com.google.api.server.spi.ServletInitializationParameters;
 import com.google.api.server.spi.guice.EndpointsModule;
@@ -33,8 +33,8 @@ public class RestEndpointsInitialization
         ServletInitializationParameters params = ServletInitializationParameters.builder()
                 // add your endpoint service implementation
                 .addServiceClass( MessageEndpoint.class )
-                .setRestricted( false )
-                .setClientIdWhitelistEnabled( false ).build();
+                .setRestricted( true )
+                .setClientIdWhitelistEnabled( true ).build();
 
         configureEndpoints( ENDPOINTS_SERVLET_PATH, params );
 

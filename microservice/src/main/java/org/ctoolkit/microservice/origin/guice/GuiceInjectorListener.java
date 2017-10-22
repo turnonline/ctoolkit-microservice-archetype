@@ -1,7 +1,8 @@
-package org.ctoolkit.microservice.origin.config;
+package org.ctoolkit.microservice.origin.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import org.ctoolkit.microservice.origin.service.MicroserviceModule;
 import org.ctoolkit.services.endpoints.EndpointsMonitorConfig;
 import org.ctoolkit.services.guice.AppEngineEnvironmentContextListener;
 
@@ -16,13 +17,13 @@ public class GuiceInjectorListener
     @Override
     protected Injector getDevelopmentInjector()
     {
-        return Guice.createInjector( new RestEndpointsModule(), new RestEndpointsInitialization() );
+        return Guice.createInjector( new MicroserviceModule(), new RestEndpointsInitialization() );
     }
 
     @Override
     protected Injector getProductionInjector()
     {
-        return Guice.createInjector( new RestEndpointsModule(),
+        return Guice.createInjector( new MicroserviceModule(),
                 new RestEndpointsInitialization(),
                 new EndpointsMonitorConfig() );
     }

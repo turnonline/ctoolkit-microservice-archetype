@@ -4,7 +4,7 @@
          version="2.5">
 
     <listener>
-        <listener-class>org.ctoolkit.microservice.origin.config.GuiceInjectorListener</listener-class>
+        <listener-class>org.ctoolkit.microservice.origin.guice.GuiceInjectorListener</listener-class>
     </listener>
 
     <filter>
