@@ -17,7 +17,7 @@
         TurnOnline.biz Ecosystem: Cloud Toolkit Microservice based on the Google Cloud Endpoints Frameworks (REST)
         for App Engine Java 1.7 standard environment.
     </description>
-    <url>https://ecosystem.turnonline.biz</url>
+    <url>https://${endpoints.project.id}.appspot.com/_ah/api/explorer</url>
 
     <build>
         <plugins>
