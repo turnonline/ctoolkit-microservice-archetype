@@ -46,9 +46,10 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:[fetch=]git@github.com:turnonline/turnonline-archetype.git</connection>
-        <developerConnection>scm:git:[push=]git@github.com:turnonline/turnonline-archetype.git</developerConnection>
-        <url>https://github.com/turnonline/turnonline-archetype</url>
+        <connection>scm:git:[fetch=]git@github.com:turnonline/ctoolkit-microservice-archetype.git</connection>
+        <developerConnection>scm:git:[push=]git@github.com:turnonline/ctoolkit-microservice-archetype.git
+        </developerConnection>
+        <url>https://github.com/turnonline/ctoolkit-microservice-archetype</url>
     </scm>
 
     <distributionManagement>
