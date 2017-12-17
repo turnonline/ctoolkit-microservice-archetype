@@ -38,11 +38,10 @@ public class MessageEndpoint
         this.common = common;
     }
 
-    // If you need only method level authentication uncomment authenticators, clientIds, and audiences.
+    // If you need only method level authentication uncomment clientIds, and audiences.
     @ApiMethod( name = "message.update",
             path = "message/{id}",
             httpMethod = ApiMethod.HttpMethod.PUT/*,
-            authenticators = {EspAuthenticator.class},
             clientIds = {OAUTH_CLIENT_ID},
             audiences = {OAUTH_CLIENT_ID}*/
     )

@@ -7,7 +7,7 @@ import com.google.api.server.spi.config.ApiNamespace;
  * The endpoint profile, the base class as a configuration of the REST API and generated client.
  * <p>
  * If you need more fine grained authentication, for example to white list your {@link #OAUTH_CLIENT_ID}
- * with Google Accounts, uncomment authenticators, clientIds, and audiences (at this level the security schemes
+ * with Google Accounts, uncomment clientIds, and audiences (at this level the security schemes
  * applies to the entire API). Thu current implementation of {@link MessageEndpoint} allows
  * authenticated users to call the API with no additional restriction.
  *
@@ -22,7 +22,6 @@ import com.google.api.server.spi.config.ApiNamespace;
         description = "Example REST API",
         documentationLink = "https://ecosystem.turnonline.biz/docs",
         namespace = @ApiNamespace( ownerDomain = "ecosystem.turnonline.biz", ownerName = "Example, Ltd." )/*,
-        authenticators = {EspAuthenticator.class},
         clientIds = {OAUTH_CLIENT_ID},
         audiences = {OAUTH_CLIENT_ID}*/
 )
