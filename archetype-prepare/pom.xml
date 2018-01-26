@@ -123,7 +123,7 @@
                                 <modify>
                                     <name>/pom:project/pom:properties/pom:endpoints.project.name/text()</name>
                                     <!--suppress MavenModelInspection -->
-                                    <value>${ProjectId}.appspot.com</value>
+                                    <value>${MyServiceName}-dot-${ProjectId}.appspot.com</value>
                                 </modify>
                                 <modify>
                                     <name>
