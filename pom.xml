@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>biz.turnonline.ecosystem</groupId>
@@ -11,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ctoolkit.archetype</groupId>
     <artifactId>ctoolkit-microservice-archetype-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <name>CtoolkiT Microservice Parent</name>
     <description>TurnOnline.biz Ecosystem: Cloud Toolkit Microservice Archetype Parent</description>
@@ -21,7 +20,7 @@
         <connection>scm:git:[fetch=]git@github.com:turnonline/ctoolkit-microservice-archetype.git</connection>
         <developerConnection>scm:git:[push=]git@github.com:turnonline/ctoolkit-microservice-archetype.git</developerConnection>
         <url>https://github.com/turnonline/ctoolkit-microservice-archetype</url>
-        <tag>HEAD</tag>
+        <tag>ctoolkit-microservice-archetype-parent-1.0</tag>
     </scm>
 
     <issueManagement>
