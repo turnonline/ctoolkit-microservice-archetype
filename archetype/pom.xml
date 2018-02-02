@@ -4,10 +4,11 @@
 
     <groupId>org.ctoolkit.archetype</groupId>
     <artifactId>ctoolkit-microservice-archetype</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>maven-archetype</packaging>
     <name>CtoolkiT Microservice Archetype Build</name>
     <description>TurnOnline.biz Ecosystem: Cloud Toolkit Microservice Archetype Build</description>
+    <url>https://github.com/turnonline/ctoolkit-microservice-archetype</url>
 
     <build>
         <extensions>
@@ -49,8 +50,7 @@
         <developerConnection>scm:git:[push=]git@github.com:turnonline/ctoolkit-microservice-archetype.git
         </developerConnection>
         <url>https://github.com/turnonline/ctoolkit-microservice-archetype</url>
-      <tag>HEAD</tag>
-  </scm>
+    </scm>
 
     <distributionManagement>
         <repository>
@@ -67,11 +67,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     </properties>
 
     <profiles>
         <profile>
-            <id>for-release</id>
+            <id>release-sign-artifacts</id>
             <activation>
                 <property>
                     <name>performRelease</name>
@@ -81,6 +82,24 @@
             <properties>
                 <maven.deploy.skip>false</maven.deploy.skip>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven-gpg-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
