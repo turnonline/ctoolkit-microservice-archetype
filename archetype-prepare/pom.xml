@@ -21,12 +21,12 @@
     <parent>
         <groupId>org.ctoolkit.archetype</groupId>
         <artifactId>ctoolkit-microservice-archetype-parent</artifactId>
-        <version>0.5-SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ctoolkit-microservice-archetype-prepare</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>CtoolkiT Microservice Prepare Archetype Resources</name>
 
@@ -124,6 +124,11 @@
                                     <name>/pom:project/pom:properties/pom:endpoints.project.name/text()</name>
                                     <!--suppress MavenModelInspection -->
                                     <value>${MyServiceName}-dot-${ProjectId}.appspot.com</value>
+                                </modify>
+                                <modify>
+                                    <name>/pom:project/pom:url/text()</name>
+                                    <!--suppress MavenModelInspection -->
+                                    <value>https://${MyServiceName}-dot-${ProjectId}.appspot.com/_ah/api/explorer</value>
                                 </modify>
                                 <modify>
                                     <name>

@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ctoolkit.archetype</groupId>
     <artifactId>ctoolkit-microservice-archetype-parent</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>CtoolkiT Microservice Parent</name>
     <description>TurnOnline.biz Ecosystem: Cloud Toolkit Microservice Archetype Parent</description>
