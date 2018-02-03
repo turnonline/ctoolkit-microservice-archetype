@@ -1,5 +1,5 @@
 # Cloud Toolkit Microservice - Archetype
-Cloud Toolkit Microservice based on the Google Cloud Endpoints Frameworks (REST) designed for Google App Engine Java 1.8 standard environment.
+Microservice based on the Google Cloud Endpoints Frameworks (REST) designed for Google App Engine Java 1.8 standard environment.
 
 ## Usage
 In order to generate microservice template from the archetype use the following command. You will be prompted to specify the information about the new project you want to create; the standard maven GAV (Group, Artifact, Version) and next ones needed for Google Cloud: **_ProjectId_** and **_MyServiceName_**.
