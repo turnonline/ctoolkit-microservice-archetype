@@ -22,10 +22,10 @@ import static org.ctoolkit.services.endpoints.EndpointsMonitorConfig.ENDPOINTS_S
  * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
  * @see EndpointsModule
  */
-public class RestEndpointsInitialization
+public class EndpointsInitialization
         extends EndpointsModule
 {
-    private static final Logger logger = LoggerFactory.getLogger( RestEndpointsInitialization.class );
+    private static final Logger logger = LoggerFactory.getLogger( EndpointsInitialization.class );
 
     @Override
     protected void configureServlets()

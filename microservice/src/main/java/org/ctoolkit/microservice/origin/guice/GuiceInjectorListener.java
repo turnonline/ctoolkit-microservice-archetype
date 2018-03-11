@@ -17,14 +17,14 @@ public class GuiceInjectorListener
     @Override
     protected Injector getDevelopmentInjector()
     {
-        return Guice.createInjector( new MicroserviceModule(), new RestEndpointsInitialization() );
+        return Guice.createInjector( new MicroserviceModule(), new EndpointsInitialization() );
     }
 
     @Override
     protected Injector getProductionInjector()
     {
         return Guice.createInjector( new MicroserviceModule(),
-                new RestEndpointsInitialization(),
+                new EndpointsInitialization(),
                 new EndpointsMonitorConfig() );
     }
 }
