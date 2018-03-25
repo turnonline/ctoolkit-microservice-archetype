@@ -1,7 +1,7 @@
 package org.ctoolkit.microservice.origin.api;
 
+import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.response.UnauthorizedException;
-import com.google.appengine.api.users.User;
 
 import javax.inject.Singleton;
 
