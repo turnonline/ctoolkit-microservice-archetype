@@ -50,7 +50,7 @@ public class MessageEndpoint
                                // Endpoints optionally injected types
                                HttpServletRequest request,
                                ServletContext context,
-                               com.google.appengine.api.users.User authUser )
+                               com.google.api.server.spi.auth.common.User authUser )
             throws Exception
     {
         common.authorize( authUser );
