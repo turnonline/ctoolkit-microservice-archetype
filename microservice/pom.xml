@@ -25,7 +25,7 @@
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>${appengine.maven.plugin.version}</version>
                 <configuration>
-                    <enableJarClasses>true</enableJarClasses>
+                    <stage.enableJarClasses>true</stage.enableJarClasses>
                 </configuration>
             </plugin>
             <plugin>
