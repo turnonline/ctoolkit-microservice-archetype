@@ -4,7 +4,7 @@
 
     <groupId>org.ctoolkit.archetype</groupId>
     <artifactId>ctoolkit-microservice-archetype</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <packaging>maven-archetype</packaging>
     <name>CtoolkiT Microservice Archetype Build</name>
     <description>TurnOnline.biz Ecosystem: Cloud Toolkit Microservice Archetype Build</description>
@@ -50,7 +50,7 @@
         <developerConnection>scm:git:[push=]git@github.com:turnonline/ctoolkit-microservice-archetype.git
         </developerConnection>
         <url>https://github.com/turnonline/ctoolkit-microservice-archetype</url>
-      <tag>HEAD</tag>
+      <tag>ctoolkit-microservice-archetype-1.1</tag>
   </scm>
 
     <distributionManagement>
