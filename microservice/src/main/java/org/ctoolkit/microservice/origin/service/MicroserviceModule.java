@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 /**
  * The application injection configuration.
  *
- * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
+ * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
 public class MicroserviceModule
         extends AbstractModule
