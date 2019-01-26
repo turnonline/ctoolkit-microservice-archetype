@@ -25,7 +25,12 @@ import com.google.api.server.spi.config.ApiNamespace;
         clientIds = {OAUTH_CLIENT_ID},
         audiences = {OAUTH_CLIENT_ID}*/
 )
-class EndpointsApiProfile
+public class EndpointsApiProfile
 {
+    /**
+     * The API short and stable name, might be used publicly.
+     */
+    public static final String API_NAME = "myApiName";
+
     static final String OAUTH_CLIENT_ID = "YOUR_OAUTH_CLIENT_ID";
 }

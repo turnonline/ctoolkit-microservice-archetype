@@ -4,8 +4,6 @@ import com.google.api.server.spi.ServletInitializationParameters;
 import com.google.api.server.spi.guice.EndpointsModule;
 import com.googlecode.objectify.ObjectifyFilter;
 import org.ctoolkit.microservice.origin.api.MessageEndpoint;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
 
@@ -20,8 +18,6 @@ import static org.ctoolkit.services.endpoints.EndpointsMonitorConfig.ENDPOINTS_S
 public class EndpointsInitialization
         extends EndpointsModule
 {
-    private static final Logger logger = LoggerFactory.getLogger( EndpointsInitialization.class );
-
     @Override
     protected void configureServlets()
     {
