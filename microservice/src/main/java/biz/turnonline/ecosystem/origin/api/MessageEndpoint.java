@@ -38,12 +38,9 @@ public class MessageEndpoint
         this.common = common;
     }
 
-    // If you need only method level authentication uncomment clientIds, and audiences.
     @ApiMethod( name = "message.update",
             path = "message/{id}",
-            httpMethod = ApiMethod.HttpMethod.PUT/*,
-            clientIds = {OAUTH_CLIENT_ID},
-            audiences = {OAUTH_CLIENT_ID}*/
+            httpMethod = ApiMethod.HttpMethod.PUT
     )
     public void updateMessage( @Named( "id" ) Long id,
                                Message message,
