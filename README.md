@@ -8,8 +8,8 @@ If you don't know yet what is your **_ProjectId_** and **_MyServiceName_** no pr
 
 ```bash
     mvn archetype:generate \
-     -DarchetypeGroupId=org.ctoolkit.archetype \
-     -DarchetypeArtifactId=ctoolkit-microservice-archetype \
+     -DarchetypeGroupId=biz.turnonline.ecosystem \
+     -DarchetypeArtifactId=turnonline-ecosystem-microservice-archetype \
      -DarchetypeVersion=1.0
 ```
 

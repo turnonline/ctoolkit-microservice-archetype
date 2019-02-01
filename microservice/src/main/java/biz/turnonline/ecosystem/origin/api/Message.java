@@ -1,4 +1,4 @@
-package org.ctoolkit.microservice.origin.api;
+package biz.turnonline.ecosystem.origin.api;
 
 /**
  * The message resource as a part of the exposed REST API.

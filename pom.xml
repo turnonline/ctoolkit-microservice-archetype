@@ -8,23 +8,23 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.ctoolkit.archetype</groupId>
-    <artifactId>ctoolkit-microservice-archetype-parent</artifactId>
+    <groupId>biz.turnonline.archetype</groupId>
+    <artifactId>turnonline-ecosystem-microservice-archetype-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>TurnOnline.biz Ecosystem Microservice Parent</name>
     <description>TurnOnline.biz Ecosystem: Cloud Toolkit Microservice Archetype Parent</description>
-    <url>https://ecosystem.turnonline.biz</url>
+    <url>https://developers.turnonline.biz</url>
 
     <scm>
-        <connection>scm:git:[fetch=]git@github.com:turnonline/ctoolkit-microservice-archetype.git</connection>
-        <developerConnection>scm:git:[push=]git@github.com:turnonline/ctoolkit-microservice-archetype.git</developerConnection>
-        <url>https://github.com/turnonline/ctoolkit-microservice-archetype</url>
+        <connection>scm:git:[fetch=]git@github.com:turnonline/ecosystem-microservice-archetype.git</connection>
+        <developerConnection>scm:git:[push=]git@github.com:turnonline/ecosystem-microservice-archetype.git</developerConnection>
+        <url>https://github.com/turnonline/ecosystem-microservice-archetype</url>
         <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
-        <url>https://github.com/turnonline/ctoolkit-microservice-archetype/issues</url>
+        <url>https://github.com/turnonline/ecosystem-microservice-archetype/issues</url>
     </issueManagement>
 
     <developers>

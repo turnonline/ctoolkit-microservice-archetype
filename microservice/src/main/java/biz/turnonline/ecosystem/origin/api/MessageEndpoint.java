@@ -1,4 +1,4 @@
-package org.ctoolkit.microservice.origin.api;
+package biz.turnonline.ecosystem.origin.api;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;

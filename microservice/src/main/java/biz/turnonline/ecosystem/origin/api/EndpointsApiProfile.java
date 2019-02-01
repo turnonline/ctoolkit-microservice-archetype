@@ -1,4 +1,4 @@
-package org.ctoolkit.microservice.origin.api;
+package biz.turnonline.ecosystem.origin.api;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -20,7 +20,7 @@ import com.google.api.server.spi.config.ApiNamespace;
         title = "Example REST API",
         version = "v1",
         description = "Example REST API",
-        documentationLink = "https://ecosystem.turnonline.biz/docs",
+        documentationLink = "https://developers.turnonline.biz/docs",
         namespace = @ApiNamespace( ownerDomain = "ecosystem.turnonline.biz", ownerName = "Example, Ltd." )/*,
         clientIds = {OAUTH_CLIENT_ID},
         audiences = {OAUTH_CLIENT_ID}*/

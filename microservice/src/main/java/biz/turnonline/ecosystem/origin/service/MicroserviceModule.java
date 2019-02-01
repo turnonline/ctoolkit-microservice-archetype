@@ -1,4 +1,4 @@
-package org.ctoolkit.microservice.origin.service;
+package biz.turnonline.ecosystem.origin.service;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;

@@ -1,9 +1,9 @@
-package org.ctoolkit.microservice.origin.guice;
+package biz.turnonline.ecosystem.origin.guice;
 
 import com.google.api.server.spi.ServletInitializationParameters;
 import com.google.api.server.spi.guice.EndpointsModule;
 import com.googlecode.objectify.ObjectifyFilter;
-import org.ctoolkit.microservice.origin.api.MessageEndpoint;
+import biz.turnonline.ecosystem.origin.api.MessageEndpoint;
 
 import javax.inject.Singleton;
 

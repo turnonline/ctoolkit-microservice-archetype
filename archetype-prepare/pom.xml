@@ -18,16 +18,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
-        <groupId>org.ctoolkit.archetype</groupId>
-        <artifactId>ctoolkit-microservice-archetype-parent</artifactId>
+        <groupId>biz.turnonline.archetype</groupId>
+        <artifactId>turnonline-ecosystem-microservice-archetype-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>ctoolkit-microservice-archetype-prepare</artifactId>
+    <artifactId>turnonline-ecosystem-microservice-archetype-prepare</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>TurnOnline.biz Ecosystem Microservice Prepare Archetype Resources</name>
+    <name>TurnOnline.biz Ecosystem Microservice Archetype Resources</name>
 
     <build>
         <plugins>

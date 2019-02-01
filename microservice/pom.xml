@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
-        <groupId>org.ctoolkit.archetype</groupId>
-        <artifactId>ctoolkit-microservice-archetype-parent</artifactId>
+        <groupId>biz.turnonline.archetype</groupId>
+        <artifactId>turnonline-ecosystem-microservice-archetype-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>ctoolkit-microservice</artifactId>
+    <artifactId>turnonline-ecosystem-microservice</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>TurnOnline.biz Ecosystem Microservice</name>
@@ -19,6 +19,7 @@
     <url>https://${endpoints.project.name}/api/explorer</url>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
@@ -37,7 +38,7 @@
                     <basePath>/api</basePath>
                     <serviceClasses>
                         <!--list all your endpoints classes here as cannot be inferred from the web.xml (guice) -->
-                        <serviceClass>org.ctoolkit.microservice.origin.api.MessageEndpoint</serviceClass>
+                        <serviceClass>biz.turnonline.ecosystem.origin.api.MessageEndpoint</serviceClass>
                     </serviceClasses>
                 </configuration>
             </plugin>

@@ -1,4 +1,4 @@
-package org.ctoolkit.microservice.origin.cache;
+package biz.turnonline.ecosystem.origin.cache;
 
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.appengine.api.memcache.ErrorHandlers;
@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.ctoolkit.microservice.origin.api.EndpointsApiProfile.API_NAME;
+import static biz.turnonline.ecosystem.origin.api.EndpointsApiProfile.API_NAME;
 
 /**
  * The local resource provider implementation that keeps cached instance

@@ -1,4 +1,4 @@
-package org.ctoolkit.microservice.origin.api;
+package biz.turnonline.ecosystem.origin.api;
 
 import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.response.UnauthorizedException;
