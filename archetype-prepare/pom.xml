@@ -127,7 +127,7 @@
                                 <modify>
                                     <name>/pom:project/pom:url/text()</name>
                                     <!--suppress MavenModelInspection -->
-                                    <value>https://${MyServiceName}-dot-${ProjectId}.appspot.com/_ah/api/explorer</value>
+                                    <value>https://${MyServiceName}-dot-${ProjectId}.appspot.com/api/explorer</value>
                                 </modify>
                                 <modify>
                                     <name>
