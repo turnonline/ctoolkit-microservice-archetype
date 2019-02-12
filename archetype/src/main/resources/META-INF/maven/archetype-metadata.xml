@@ -29,6 +29,7 @@
             <directory>src/main/webapp</directory>
             <includes>
                 <include>**/*.xml</include>
+                <include>**/*.yaml</include>
             </includes>
         </fileSet>
     </fileSets>
