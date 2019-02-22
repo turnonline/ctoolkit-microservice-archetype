@@ -4,6 +4,9 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiReference;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.response.InternalServerErrorException;
+import com.google.api.server.spi.response.NotFoundException;
+import com.google.api.server.spi.response.UnauthorizedException;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -42,14 +45,20 @@ public class MessageEndpoint
             path = "message/{id}",
             httpMethod = ApiMethod.HttpMethod.PUT
     )
-    public void updateMessage( @Named( "id" ) Long id,
-                               Message message,
-                               // Endpoints optionally injected types
-                               HttpServletRequest request,
-                               ServletContext context,
-                               com.google.api.server.spi.auth.common.User authUser )
-            throws Exception
+    public Message updateMessage( @Named( "id" ) Long id,
+                                  Message message,
+                                  // Endpoints optionally injected types
+                                  HttpServletRequest request,
+                                  ServletContext context,
+                                  com.google.api.server.spi.auth.common.User authUser )
+            throws NotFoundException, InternalServerErrorException, UnauthorizedException
     {
-        common.authorize( authUser );
+        // uncomment once you have signed-up for TurnOnline.biz Ecosystem account
+        //common.checkLocalAccount( authUser );
+
+        String greetings = message.getGreetings() == null ? "" : " " + message.getGreetings();
+        message.setGreetings( id + greetings );
+
+        return message;
     }
 }

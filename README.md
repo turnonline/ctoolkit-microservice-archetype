@@ -1,4 +1,4 @@
-# Cloud Toolkit Microservice - Archetype
+# TurnOnline.biz Ecosystem Microservice - Archetype
 Microservice based on the Google Cloud Endpoints Frameworks (REST) designed for Google App Engine Java 1.8 standard environment.
 
 ## Usage
@@ -23,6 +23,7 @@ Google Cloud Project ID (source Google Cloud)
 ### MyServiceName
 - In an App Engine project (defined by ProjectId), you can deploy multiple microservices as separate services and each of the service must have its own name unique within project.
 - The service name is one of the part of the service URL.
+- The service name might be changed if needed later.
 
 ![Multiple services within single Google Cloud Project](https://cloud.google.com/solutions/images/microservices-project-with-modules.png)
 

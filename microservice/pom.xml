@@ -105,6 +105,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- TurnOnline.biz Ecosystem -->
+        <dependency>
+            <groupId>biz.turnonline.ecosystem</groupId>
+            <artifactId>turnonline-account-steward-client</artifactId>
+            <version>0.9</version>
+        </dependency>
         <!-- Java Servlet API -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -213,6 +219,10 @@
         <dependency>
             <groupId>org.ctoolkit.services</groupId>
             <artifactId>ctoolkit-services-endpoints</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ctoolkit.services</groupId>
+            <artifactId>ctoolkit-services-storage</artifactId>
         </dependency>
         <!--Java bean mapping-->
         <dependency>

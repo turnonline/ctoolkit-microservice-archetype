@@ -1,6 +1,7 @@
 package biz.turnonline.ecosystem.origin.api;
 
 import com.google.api.server.spi.auth.EspAuthenticator;
+import com.google.api.server.spi.auth.GoogleOAuth2Authenticator;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiIssuer;
 import com.google.api.server.spi.config.ApiIssuerAudience;
@@ -28,7 +29,8 @@ import static biz.turnonline.ecosystem.origin.api.EndpointsApiProfile.PROJECT_ID
         description = "Example REST API",
         documentationLink = "https://developers.turnonline.biz/docs",
         namespace = @ApiNamespace( ownerDomain = "turnonline.biz", ownerName = "TurnOnline.biz, Ltd." ),
-        authenticators = {ServerToServerAuthenticator.class, EspAuthenticator.class},
+        // GoogleOAuth2Authenticator only for local development, remove it once Firebase Authentication is in place
+        authenticators = {ServerToServerAuthenticator.class, GoogleOAuth2Authenticator.class, EspAuthenticator.class},
         issuers = {
                 @ApiIssuer(
                         name = "firebase",

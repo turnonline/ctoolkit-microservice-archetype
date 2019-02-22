@@ -18,8 +18,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static biz.turnonline.ecosystem.origin.api.EndpointsApiProfile.API_NAME;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The local resource provider implementation that keeps cached instance
@@ -55,7 +55,7 @@ public abstract class AbstractLocalResourceProvider<T>
 
     private final MemcacheService syncCache;
 
-    public AbstractLocalResourceProvider()
+    AbstractLocalResourceProvider()
     {
         syncCache = MemcacheServiceFactory.getMemcacheService();
         syncCache.setErrorHandler( ErrorHandlers.getConsistentLogAndContinue( Level.INFO ) );

@@ -1,5 +1,11 @@
 package biz.turnonline.ecosystem.origin.service;
 
+import biz.turnonline.ecosystem.origin.cache.RemoteAccountCache;
+import biz.turnonline.ecosystem.origin.guice.EntityRegistrarModule;
+import biz.turnonline.ecosystem.origin.service.model.LocalAccountProviderImpl;
+import biz.turnonline.ecosystem.steward.facade.AccountStewardAdapterModule;
+import biz.turnonline.ecosystem.steward.facade.AccountStewardApiModule;
+import biz.turnonline.ecosystem.steward.model.Account;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -10,7 +16,12 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.TypeLiteral;
+import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeAppEngineModule;
+import org.ctoolkit.restapi.client.appengine.DefaultOrikaMapperFactoryModule;
+import org.ctoolkit.restapi.client.provider.LocalResourceProvider;
 import org.ctoolkit.restapi.client.pubsub.PubsubMessageListener;
+import org.ctoolkit.services.storage.guice.GuicefiedOfyFactory;
 
 import javax.inject.Singleton;
 import java.io.IOException;
@@ -27,6 +38,19 @@ public class MicroserviceModule
     @Override
     protected void configure()
     {
+        install( new EntityRegistrarModule() );
+        install( new CtoolkitRestFacadeAppEngineModule() );
+        install( new DefaultOrikaMapperFactoryModule() );
+        install( new AccountStewardApiModule() );
+        install( new AccountStewardAdapterModule() );
+
+        bind( GuicefiedOfyFactory.class ).asEagerSingleton();
+        bind( LocalAccountProvider.class ).to( LocalAccountProviderImpl.class );
+
+        // will be interpreted by REST Facade
+        bind( new TypeLiteral<LocalResourceProvider<Account>>()
+        {
+        } ).to( RemoteAccountCache.class );
     }
 
     @Provides
