@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -47,6 +48,8 @@ public class LocalAccount
     @Index
     private String email;
 
+    private String zone;
+
     @SuppressWarnings( "unused" )
     LocalAccount()
     {
@@ -75,6 +78,16 @@ public class LocalAccount
         Account account = getAccount( facade );
         this.identityId = account.getIdentityId();
         this.locale = account.getLocale();
+
+        String zoneId = account.getZoneId();
+        if ( Strings.isNullOrEmpty( zoneId ) )
+        {
+            this.zone = "Europe/Paris";
+        }
+        else
+        {
+            this.zone = zoneId;
+        }
     }
 
     /**
@@ -125,6 +138,18 @@ public class LocalAccount
                 .identifiedBy( String.valueOf( getAccountId() ) )
                 .onBehalf( email, identityId )
                 .finish();
+    }
+
+    /**
+     * Returns the time-zone ID, such as Europe/Paris. Used to identify the rules
+     * how to render date time properties of the resources associated with this account.
+     *
+     * @return the time-zone ID
+     */
+    public ZoneId getZoneId()
+    {
+        checkNotNull( zone );
+        return ZoneId.of( zone );
     }
 
     /**
