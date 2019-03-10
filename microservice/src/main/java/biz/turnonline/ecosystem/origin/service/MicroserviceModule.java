@@ -17,8 +17,9 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
+import org.ctoolkit.restapi.client.PubSub;
 import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeAppEngineModule;
-import org.ctoolkit.restapi.client.appengine.DefaultOrikaMapperFactoryModule;
+import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeDefaultOrikaModule;
 import org.ctoolkit.restapi.client.provider.LocalResourceProvider;
 import org.ctoolkit.restapi.client.pubsub.PubsubMessageListener;
 import org.ctoolkit.services.storage.guice.GuicefiedOfyFactory;
@@ -40,7 +41,7 @@ public class MicroserviceModule
     {
         install( new EntityRegistrarModule() );
         install( new CtoolkitRestFacadeAppEngineModule() );
-        install( new DefaultOrikaMapperFactoryModule() );
+        install( new CtoolkitRestFacadeDefaultOrikaModule() );
         install( new AccountStewardApiModule() );
         install( new AccountStewardAdapterModule() );
 
@@ -53,9 +54,7 @@ public class MicroserviceModule
         } ).to( RemoteAccountCache.class );
     }
 
-    @Provides
-    @Singleton
-    ObjectMapper provideJsonObjectMapper()
+    private ObjectMapper baseObjectMapper()
     {
         JsonFactory factory = new JsonFactory();
         factory.enable( JsonParser.Feature.ALLOW_COMMENTS );
@@ -66,6 +65,23 @@ public class MicroserviceModule
         ObjectMapper mapper = new ObjectMapper( factory );
         mapper.setSerializationInclusion( JsonInclude.Include.NON_NULL );
         mapper.registerModule( module );
+
+        return mapper;
+    }
+
+    @Provides
+    @Singleton
+    ObjectMapper provideJsonObjectMapper()
+    {
+        return baseObjectMapper();
+    }
+
+    @Provides
+    @Singleton
+    @PubSub
+    ObjectMapper provideJsonObjectMapperPubSub()
+    {
+        ObjectMapper mapper = baseObjectMapper();
         mapper.setDateFormat( new SimpleDateFormat( PubsubMessageListener.PUB_SUB_DATE_FORMAT ) );
 
         return mapper;
