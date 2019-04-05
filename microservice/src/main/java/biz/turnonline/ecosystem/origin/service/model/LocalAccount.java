@@ -131,11 +131,8 @@ public class LocalAccount
      */
     public Account getAccount( @Nonnull RestFacade facade )
     {
-        checkNotNull( getAccountId(), "Account ID can't be null" );
-        checkNotNull( facade, "REST Facade service must be provided" );
-
-        return facade.get( Account.class )
-                .identifiedBy( String.valueOf( getAccountId() ) )
+        return checkNotNull( facade, "REST Facade must be provided" ).get( Account.class )
+                .identifiedBy( String.valueOf( checkNotNull( getAccountId(), "Account ID can't be null" ) ) )
                 .onBehalf( email, identityId )
                 .finish();
     }
