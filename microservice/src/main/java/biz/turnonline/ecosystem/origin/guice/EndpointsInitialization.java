@@ -1,9 +1,9 @@
 package biz.turnonline.ecosystem.origin.guice;
 
+import biz.turnonline.ecosystem.origin.api.MessageEndpoint;
 import com.google.api.server.spi.ServletInitializationParameters;
 import com.google.api.server.spi.guice.EndpointsModule;
 import com.googlecode.objectify.ObjectifyFilter;
-import biz.turnonline.ecosystem.origin.api.MessageEndpoint;
 
 import javax.inject.Singleton;
 
@@ -24,6 +24,7 @@ public class EndpointsInitialization
         ServletInitializationParameters params = ServletInitializationParameters.builder()
                 // add your endpoint service implementation
                 .addServiceClass( MessageEndpoint.class )
+                // If ServerToServerAuthenticator is being employed ClientIdWhitelistEnabled needs to be set to false
                 .setClientIdWhitelistEnabled( true ).build();
 
         configureEndpoints( ENDPOINTS_SERVLET_PATH, params );
