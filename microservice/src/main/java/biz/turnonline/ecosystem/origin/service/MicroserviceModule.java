@@ -4,7 +4,7 @@ import biz.turnonline.ecosystem.origin.cache.RemoteAccountCache;
 import biz.turnonline.ecosystem.origin.guice.EntityRegistrarModule;
 import biz.turnonline.ecosystem.origin.service.model.LocalAccountProviderImpl;
 import biz.turnonline.ecosystem.steward.facade.AccountStewardAdapterModule;
-import biz.turnonline.ecosystem.steward.facade.AccountStewardApiModule;
+import biz.turnonline.ecosystem.steward.facade.AccountStewardClientModule;
 import biz.turnonline.ecosystem.steward.model.Account;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -42,7 +42,7 @@ public class MicroserviceModule
         install( new EntityRegistrarModule() );
         install( new CtoolkitRestFacadeAppEngineModule() );
         install( new CtoolkitRestFacadeDefaultOrikaModule() );
-        install( new AccountStewardApiModule() );
+        install( new AccountStewardClientModule() );
         install( new AccountStewardAdapterModule() );
 
         bind( GuicefiedOfyFactory.class ).asEagerSingleton();
