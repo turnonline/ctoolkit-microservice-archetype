@@ -4,7 +4,7 @@
 
     <groupId>biz.turnonline.ecosystem</groupId>
     <artifactId>turnonline-ecosystem-microservice-archetype</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <packaging>maven-archetype</packaging>
     <name>TurnOnline.biz Ecosystem Microservice Archetype</name>
     <description>TurnOnline.biz Ecosystem: Cloud Toolkit Microservice Archetype</description>
@@ -50,7 +50,7 @@
         <developerConnection>scm:git:[push=]git@github.com:turnonline/ecosystem-microservice-archetype.git
         </developerConnection>
         <url>https://github.com/turnonline/ecosystem-microservice-archetype</url>
-      <tag>HEAD</tag>
+      <tag>turnonline-ecosystem-microservice-archetype-1.2</tag>
   </scm>
 
     <distributionManagement>
