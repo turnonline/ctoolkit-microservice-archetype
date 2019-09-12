@@ -1,8 +1,9 @@
 package biz.turnonline.ecosystem.origin.service;
 
+import biz.turnonline.ecosystem.origin.account.AccountStewardChangesSubscription;
+import biz.turnonline.ecosystem.origin.account.LocalAccountProviderImpl;
 import biz.turnonline.ecosystem.origin.cache.RemoteAccountCache;
 import biz.turnonline.ecosystem.origin.guice.EntityRegistrarModule;
-import biz.turnonline.ecosystem.origin.service.model.LocalAccountProviderImpl;
 import biz.turnonline.ecosystem.steward.facade.AccountStewardAdapterModule;
 import biz.turnonline.ecosystem.steward.facade.AccountStewardClientModule;
 import biz.turnonline.ecosystem.steward.model.Account;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
 import org.ctoolkit.restapi.client.PubSub;
 import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeAppEngineModule;
 import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeDefaultOrikaModule;
@@ -47,6 +49,10 @@ public class MicroserviceModule
 
         bind( GuicefiedOfyFactory.class ).asEagerSingleton();
         bind( LocalAccountProvider.class ).to( LocalAccountProviderImpl.class );
+
+        MapBinder<String, PubsubMessageListener> map;
+        map = MapBinder.newMapBinder( binder(), String.class, PubsubMessageListener.class );
+        map.addBinding( "account.changes" ).to( AccountStewardChangesSubscription.class );
 
         // will be interpreted by REST Facade
         bind( new TypeLiteral<LocalResourceProvider<Account>>()

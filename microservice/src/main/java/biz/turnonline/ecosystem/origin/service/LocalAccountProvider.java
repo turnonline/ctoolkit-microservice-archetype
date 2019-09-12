@@ -1,6 +1,6 @@
 package biz.turnonline.ecosystem.origin.service;
 
-import biz.turnonline.ecosystem.origin.service.model.LocalAccount;
+import biz.turnonline.ecosystem.origin.account.LocalAccount;
 import org.ctoolkit.restapi.client.NotFoundException;
 
 import javax.annotation.Nonnull;
@@ -15,7 +15,7 @@ public interface LocalAccountProvider
     /**
      * Returns the local lightweight account entity instance.
      * <p>
-     * If {@link LocalAccount} instance accessed for the first time will be stored in datastore.
+     * If {@link LocalAccount} instance accessed for the first time, then it will be stored in datastore.
      *
      * @param email the login email address of the account
      * @param id    the account unique identification within TurnOnline.biz Ecosystem

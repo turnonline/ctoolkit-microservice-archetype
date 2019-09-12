@@ -1,7 +1,7 @@
 package biz.turnonline.ecosystem.origin.api;
 
 import biz.turnonline.ecosystem.origin.service.LocalAccountProvider;
-import biz.turnonline.ecosystem.origin.service.model.LocalAccount;
+import biz.turnonline.ecosystem.origin.account.LocalAccount;
 import biz.turnonline.ecosystem.steward.model.Account;
 import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.response.InternalServerErrorException;

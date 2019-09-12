@@ -1,4 +1,4 @@
-package biz.turnonline.ecosystem.origin.service.model;
+package biz.turnonline.ecosystem.origin.account;
 
 import biz.turnonline.ecosystem.origin.service.LocalAccountProvider;
 import com.google.common.base.Stopwatch;

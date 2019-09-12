@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>biz.turnonline.archetype</groupId>
@@ -13,8 +14,8 @@
     <packaging>war</packaging>
     <name>TurnOnline.biz Ecosystem Microservice</name>
     <description>
-        TurnOnline.biz Ecosystem: Cloud Toolkit Microservice based on the Google Cloud Endpoints Frameworks (REST)
-        for Google App Engine Java 1.8 standard environment.
+        TurnOnline.biz Ecosystem Microservice based on the Google Cloud Endpoints Frameworks (REST)
+        for Google App Engine Java 1.8 standard environment. It fully benefits from the Google's Serverless platform.
     </description>
     <url>https://${endpoints.project.name}/api/explorer</url>
 
@@ -250,6 +251,10 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.truth</groupId>
+            <artifactId>truth</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,6 +1,6 @@
 package biz.turnonline.ecosystem.origin.guice;
 
-import biz.turnonline.ecosystem.origin.service.model.LocalAccount;
+import biz.turnonline.ecosystem.origin.account.LocalAccount;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
 import org.ctoolkit.services.storage.guice.EntityRegistrar;

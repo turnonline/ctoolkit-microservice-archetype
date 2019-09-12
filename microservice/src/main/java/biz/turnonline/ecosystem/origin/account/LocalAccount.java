@@ -1,4 +1,4 @@
-package biz.turnonline.ecosystem.origin.service.model;
+package biz.turnonline.ecosystem.origin.account;
 
 import biz.turnonline.ecosystem.steward.model.Account;
 import com.google.common.base.MoreObjects;
@@ -121,6 +121,20 @@ public class LocalAccount
     }
 
     /**
+     * Sets the login email address of the account.
+     * <p>
+     * In some (probably rare) cases an user might change its login email under the umbrella
+     * of the same login provider. In this case the identity Id remains same,
+     * while email has been changed.
+     *
+     * @param email the email to be set, not null
+     */
+    void setEmail( @Nonnull String email )
+    {
+        this.email = checkNotNull( email, "Login email can't be null" );
+    }
+
+    /**
      * Retrieves remote account identified by {@link #getAccountId()}.
      * Authentication against microservice is via service account
      * on behalf of current email and identityId.
@@ -145,8 +159,17 @@ public class LocalAccount
      */
     public ZoneId getZoneId()
     {
-        checkNotNull( zone );
-        return ZoneId.of( zone );
+        return ZoneId.of( checkNotNull( zone, "LocalAccount.zone property can't be null" ) );
+    }
+
+    /**
+     * Sets the time-zone ID.
+     *
+     * @param zone the time-zone ID to be set, not null
+     */
+    void setZoneId( @Nonnull String zone )
+    {
+        this.zone = checkNotNull( zone, "Zone ID can't be null" );
     }
 
     /**
@@ -237,6 +260,7 @@ public class LocalAccount
                 .add( "email", email )
                 .add( "identityId", identityId )
                 .add( "locale", locale )
+                .add( "zone", zone )
                 .toString();
     }
 }
