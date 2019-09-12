@@ -49,5 +49,5 @@ public class EndpointsApiProfile
      */
     public static final String API_NAME = "myApiName";
 
-    static final String PROJECT_ID = "${ProjectId}";
+    static final String PROJECT_ID = "Replace-ProjectId";
 }

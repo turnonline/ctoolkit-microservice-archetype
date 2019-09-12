@@ -15,7 +15,8 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>biz.turnonline.archetype</groupId>
@@ -179,6 +180,28 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!-- workaround as we need to escape dollar symbol in java file while archetype generation -->
+                <configuration>
+                    <file>
+                        ${basedir}/${generated-archetype-path}/src/main/resources/archetype-resources/src/main/java/api/EndpointsApiProfile.java
+                    </file>
+                    <token>Replace-ProjectId</token>
+                    <!--suppress MavenModelInspection -->
+                    <value>\${ProjectId}</value>
+                </configuration>
             </plugin>
             <!-- Clean up generated archetype resources from archetype directory -->
             <plugin>
