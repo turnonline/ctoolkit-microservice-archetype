@@ -1,10 +1,13 @@
 package biz.turnonline.ecosystem.origin.account;
 
+import biz.turnonline.ecosystem.origin.service.LocalAccountProvider;
 import biz.turnonline.ecosystem.steward.model.Account;
+import biz.turnonline.ecosystem.steward.model.AccountBusiness;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import org.ctoolkit.restapi.client.NotFoundException;
 import org.ctoolkit.restapi.client.RestFacade;
@@ -36,6 +39,8 @@ public class LocalAccount
 {
     private static final Locale DEFAULT_LOCALE = new Locale( "en" );
 
+    private static final String DEFAULT_DOMICILE = "SK";
+
     private static final Logger LOGGER = LoggerFactory.getLogger( LocalAccount.class );
 
     private static final long serialVersionUID = 1L;
@@ -50,21 +55,41 @@ public class LocalAccount
 
     private String zone;
 
-    @SuppressWarnings( "unused" )
+    private String domicile;
+
+    @Ignore
+    private transient Account tAccount;
+
     LocalAccount()
     {
     }
 
     /**
+     * Constructs local account. If no Account ID set then can't be saved.
+     *
+     * @param builder mandatory properties are: email, identityId
+     */
+    LocalAccount( @Nonnull LocalAccountProvider.Builder builder )
+    {
+        checkNotNull( builder, "Builder can't be null" );
+        this.email = checkNotNull( builder.email, "Account email is mandatory" );
+        this.identityId = checkNotNull( builder.identityId, "Account Identity ID is mandatory" );
+        super.setId( builder.accountId );
+    }
+
+    /**
      * Constructs local account.
      *
-     * @param email     the login email address as the account identification
-     * @param accountId TurnOnline.biz Ecosystem account unique ID, it's being treated as an local account ID
+     * @param account the TurnOnline.biz Ecosystem remote account
      */
-    LocalAccount( @Nonnull String email, @Nonnull Long accountId )
+    public LocalAccount( @Nonnull Account account )
     {
-        super.setId( checkNotNull( accountId, "Account ID is mandatory." ) );
-        this.email = checkNotNull( email, "Account email is mandatory." );
+        this( new LocalAccountProvider.Builder()
+                .accountId( account.getId() )
+                .email( account.getEmail() )
+                .identityId( account.getIdentityId() ) );
+
+        this.tAccount = account;
     }
 
     /**
@@ -76,8 +101,17 @@ public class LocalAccount
     void init( @Nonnull RestFacade facade )
     {
         Account account = getAccount( facade );
+
+        super.setId( account.getId() );
+        this.email = account.getEmail();
         this.identityId = account.getIdentityId();
         this.locale = account.getLocale();
+
+        AccountBusiness business = account.getBusiness();
+        if ( business != null )
+        {
+            domicile = business.getDomicile();
+        }
 
         String zoneId = account.getZoneId();
         if ( Strings.isNullOrEmpty( zoneId ) )
@@ -91,23 +125,13 @@ public class LocalAccount
     }
 
     /**
-     * Returns the account unique identification.
+     * Returns the account unique identification within TurnOnline.biz Ecosystem.
      *
      * @return the account unique identification
      */
     public Long getAccountId()
     {
         return getId();
-    }
-
-    /**
-     * The email account unique identification within third-party login provider.
-     *
-     * @return the unique identification of the email account
-     */
-    public String getIdentityId()
-    {
-        return identityId;
     }
 
     /**
@@ -135,6 +159,16 @@ public class LocalAccount
     }
 
     /**
+     * The email account unique identification within third-party login provider.
+     *
+     * @return the unique identification of the email account
+     */
+    public String getIdentityId()
+    {
+        return identityId;
+    }
+
+    /**
      * Retrieves remote account identified by {@link #getAccountId()}.
      * Authentication against microservice is via service account
      * on behalf of current email and identityId.
@@ -145,9 +179,25 @@ public class LocalAccount
      */
     public Account getAccount( @Nonnull RestFacade facade )
     {
+        if ( tAccount != null )
+        {
+            return tAccount;
+        }
+
+        String loginId;
+        Long accountId = getAccountId();
+        if ( accountId == null )
+        {
+            loginId = getIdentityId();
+        }
+        else
+        {
+            loginId = accountId.toString();
+        }
+
         return checkNotNull( facade, "REST Facade must be provided" ).get( Account.class )
-                .identifiedBy( String.valueOf( checkNotNull( getAccountId(), "Account ID can't be null" ) ) )
-                .onBehalf( email, identityId )
+                .identifiedBy( checkNotNull( loginId, "Account login ID can't be null" ) )
+                .onBehalfOf( this )
                 .finish();
     }
 
@@ -217,9 +267,63 @@ public class LocalAccount
         return locale;
     }
 
+    /**
+     * Returns the account domicile with optional preference. Always returns a value.
+     * If none domicile value found a {@link #DEFAULT_DOMICILE} will be returned.
+     *
+     * @param domicile the optional (preferred) ISO 3166 alpha-2 country code that represents a target domicile
+     * @return the final domicile
+     */
+    public String getDomicile( @Nullable String domicile )
+    {
+        if ( domicile == null )
+        {
+            if ( Strings.isNullOrEmpty( this.domicile ) )
+            {
+                domicile = DEFAULT_DOMICILE;
+                LOGGER.warn( "Using service default locale: " + domicile );
+            }
+            else
+            {
+                domicile = this.domicile;
+            }
+        }
+        return domicile.toUpperCase();
+    }
+
+    /**
+     * Returns the account domicile. Always returns a value.
+     * If none domicile value found a {@link #DEFAULT_DOMICILE} will be returned.
+     *
+     * @return the account domicile or default
+     */
+    public String getDomicile()
+    {
+        if ( Strings.isNullOrEmpty( domicile ) )
+        {
+            return DEFAULT_DOMICILE;
+        }
+        return domicile;
+    }
+
+    /**
+     * Sets the ISO 3166 alpha-2 country code that represents account domicile.
+     *
+     * @param domicile the domicile to be set
+     */
+    void setDomicile( String domicile )
+    {
+        this.domicile = domicile;
+    }
+
     @Override
     public void save()
     {
+        if ( getId() == null )
+        {
+            String msg = "The Account ID is being expected to be set in advance from remote Account.";
+            throw new IllegalArgumentException( msg );
+        }
         ofy().transact( () -> ofy().save().entity( this ).now() );
     }
 
@@ -243,7 +347,7 @@ public class LocalAccount
         if ( !( o instanceof LocalAccount ) ) return false;
 
         LocalAccount that = ( LocalAccount ) o;
-        return getId().equals( that.getId() );
+        return Objects.equals( this.getId(), that.getId() );
     }
 
     @Override
@@ -260,6 +364,7 @@ public class LocalAccount
                 .add( "email", email )
                 .add( "identityId", identityId )
                 .add( "locale", locale )
+                .add( "domicile", domicile )
                 .add( "zone", zone )
                 .toString();
     }

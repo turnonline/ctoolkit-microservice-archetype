@@ -1,6 +1,7 @@
 package biz.turnonline.ecosystem.origin.service;
 
 import biz.turnonline.ecosystem.origin.account.AccountStewardChangesSubscription;
+import biz.turnonline.ecosystem.origin.account.LocalAccount;
 import biz.turnonline.ecosystem.origin.account.LocalAccountProviderImpl;
 import biz.turnonline.ecosystem.origin.cache.RemoteAccountCache;
 import biz.turnonline.ecosystem.origin.guice.EntityRegistrarModule;
@@ -23,6 +24,7 @@ import org.ctoolkit.restapi.client.PubSub;
 import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeAppEngineModule;
 import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeDefaultOrikaModule;
 import org.ctoolkit.restapi.client.provider.LocalResourceProvider;
+import org.ctoolkit.restapi.client.provider.TokenProvider;
 import org.ctoolkit.restapi.client.pubsub.PubsubMessageListener;
 import org.ctoolkit.services.storage.guice.GuicefiedOfyFactory;
 
@@ -58,6 +60,10 @@ public class MicroserviceModule
         bind( new TypeLiteral<LocalResourceProvider<Account>>()
         {
         } ).to( RemoteAccountCache.class );
+
+        bind( new TypeLiteral<TokenProvider<LocalAccount>>()
+        {
+        } ).to( ServerToEcosystemCallConfig.class );
     }
 
     private ObjectMapper baseObjectMapper()

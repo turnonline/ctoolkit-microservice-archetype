@@ -1,8 +1,7 @@
 package biz.turnonline.ecosystem.origin.api;
 
-import biz.turnonline.ecosystem.origin.service.LocalAccountProvider;
 import biz.turnonline.ecosystem.origin.account.LocalAccount;
-import biz.turnonline.ecosystem.steward.model.Account;
+import biz.turnonline.ecosystem.origin.service.LocalAccountProvider;
 import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.response.InternalServerErrorException;
 import com.google.api.server.spi.response.NotFoundException;
@@ -55,29 +54,23 @@ class EndpointsCommon
             throw new UnauthorizedException( "User is unauthorized." );
         }
 
-        String authEmail = authUser.getEmail();
-        LocalAccount localAccount = lap.get( authEmail );
+        LocalAccount localAccount;
+        LocalAccountProvider.Builder builder = new LocalAccountProvider.Builder()
+                .email( authUser.getEmail() )
+                .identityId( authUser.getId() );
 
-        if ( localAccount == null )
+        try
         {
-            try
-            {
-                Account account = facade.get( Account.class )
-                        .identifiedBy( authEmail )
-                        .onBehalf( authEmail, authUser.getId() )
-                        .finish();
-
-                lap.initGet( account.getEmail(), account.getId() );
-            }
-            catch ( org.ctoolkit.restapi.client.NotFoundException e )
-            {
-                throw new NotFoundException( "TurnOnline.biz Ecosystem account not found for email: " + authEmail );
-            }
-            catch ( Exception e )
-            {
-                LOGGER.error( "Account retrieval for email '" + authEmail + "' has failed", e );
-                throw new InternalServerErrorException( tryAgainLaterMessage() );
-            }
+            localAccount = lap.initGet( builder );
+        }
+        catch ( org.ctoolkit.restapi.client.NotFoundException e )
+        {
+            throw new NotFoundException( "TurnOnline.biz Ecosystem account not found for: " + builder );
+        }
+        catch ( Exception e )
+        {
+            LOGGER.error( "Account retrieval for '" + builder + "' has failed", e );
+            throw new InternalServerErrorException( tryAgainLaterMessage() );
         }
 
         return localAccount;

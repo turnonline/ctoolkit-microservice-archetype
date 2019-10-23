@@ -33,21 +33,22 @@ public class LocalAccountProviderImpl
     }
 
     @Override
-    public LocalAccount initGet( @Nonnull String email, @Nonnull Long id )
+    public LocalAccount initGet( @Nonnull Builder builder )
     {
-        checkNotNull( email, "Account email cannot be null" );
-        checkNotNull( id, "Account ID cannot be null" );
+        checkNotNull( builder, "Builder can't be null" );
+        checkNotNull( builder.email, "Account email can't be null" );
+        checkNotNull( builder.identityId, "Account Identity ID is mandatory" );
 
-        LocalAccount localAccount = get( id );
+        LocalAccount localAccount = get( builder.email );
 
         if ( localAccount == null )
         {
             Stopwatch stopwatch = Stopwatch.createStarted();
-            localAccount = new LocalAccount( email, id );
+            localAccount = new LocalAccount( builder );
             localAccount.init( facade );
             localAccount.save();
             stopwatch.stop();
-            LOGGER.info( "Local account has been created (" + stopwatch + "): " + localAccount );
+            LOGGER.info( "Local account just has been created (" + stopwatch + "): " + localAccount );
         }
 
         return localAccount;
@@ -56,7 +57,14 @@ public class LocalAccountProviderImpl
     @Override
     public LocalAccount get( @Nonnull String email )
     {
-        return ofy().load().type( LocalAccount.class ).filter( "email", email ).first().now();
+        checkNotNull( email, "Account email can't be null" );
+
+        return ofy()
+                .load()
+                .type( LocalAccount.class )
+                .filter( "email", email )
+                .first()
+                .now();
     }
 
     @Override

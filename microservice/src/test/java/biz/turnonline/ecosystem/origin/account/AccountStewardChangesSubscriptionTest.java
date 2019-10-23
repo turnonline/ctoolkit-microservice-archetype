@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.ACCOUNT_EMAIL;
+import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.ACCOUNT_IDENTITY_ID;
 import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.ACCOUNT_UNIQUE_ID;
 import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.DATA_TYPE;
 import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.ENCODED_UNIQUE_KEY;
@@ -32,6 +33,10 @@ public class AccountStewardChangesSubscriptionTest
 {
     private static final String EMAIL = "my.account@turnonline.biz";
 
+    private static final String EMAIL_CHANGED = "another.account@turnonline.biz";
+
+    private static final String IDENTITY_ID = "34ghW4jL9";
+
     private static final Long ACCOUNT_ID = 1233219L;
 
     @Tested
@@ -43,13 +48,17 @@ public class AccountStewardChangesSubscriptionTest
     @Test
     public void onMessage_ValidPubsubMessage_NoChange() throws Exception
     {
-        LocalAccount localAccount = new LocalAccount( EMAIL, ACCOUNT_ID );
+        LocalAccount localAccount = new LocalAccount( new LocalAccountProvider.Builder()
+                .accountId( ACCOUNT_ID )
+                .email( EMAIL )
+                .identityId( IDENTITY_ID ) );
+
         localAccount.setZoneId( "Europe/Paris" );
 
         new Expectations( localAccount )
         {
             {
-                lap.initGet( EMAIL, ACCOUNT_ID );
+                lap.initGet( ( LocalAccountProvider.Builder ) any );
                 result = localAccount;
 
                 localAccount.save();
@@ -60,21 +69,41 @@ public class AccountStewardChangesSubscriptionTest
         PubsubMessage message = validPubsubMessage();
         tested.onMessage( message, "account.changes" );
 
+        assertThat( localAccount.getAccountId() ).isEqualTo( ACCOUNT_ID );
         assertThat( localAccount.getEmail() ).isEqualTo( EMAIL );
+        assertThat( localAccount.getIdentityId() ).isEqualTo( IDENTITY_ID );
         assertThat( localAccount.getZoneId() ).isEqualTo( ZoneId.of( "Europe/Paris" ) );
         assertThat( localAccount.getLocale() ).isEqualTo( Locale.ENGLISH );
+        assertThat( localAccount.getDomicile() ).isEqualTo( "SK" );
+
+        new Verifications()
+        {
+            {
+                LocalAccountProvider.Builder builder;
+                lap.initGet( builder = withCapture() );
+
+                assertThat( builder ).isNotNull();
+                assertThat( builder.accountId ).isEqualTo( ACCOUNT_ID );
+                assertThat( builder.email ).isEqualTo( EMAIL );
+                assertThat( builder.identityId ).isEqualTo( IDENTITY_ID );
+            }
+        };
     }
 
     @Test
     public void onMessage_ValidPubsubMessage_ZoneIdChanged() throws Exception
     {
-        LocalAccount localAccount = new LocalAccount( EMAIL, ACCOUNT_ID );
+        LocalAccount localAccount = new LocalAccount( new LocalAccountProvider.Builder()
+                .accountId( ACCOUNT_ID )
+                .email( EMAIL )
+                .identityId( IDENTITY_ID ) );
+
         localAccount.setZoneId( "America/Chicago" );
 
         new Expectations( localAccount )
         {
             {
-                lap.initGet( EMAIL, ACCOUNT_ID );
+                lap.initGet( ( LocalAccountProvider.Builder ) any );
                 result = localAccount;
 
                 localAccount.save();
@@ -93,14 +122,17 @@ public class AccountStewardChangesSubscriptionTest
     @Test
     public void onMessage_ValidPubsubMessage_EmailChanged() throws Exception
     {
-        LocalAccount localAccount = new LocalAccount( EMAIL, ACCOUNT_ID );
+        LocalAccount localAccount = new LocalAccount( new LocalAccountProvider.Builder()
+                .accountId( ACCOUNT_ID )
+                .email( EMAIL )
+                .identityId( IDENTITY_ID ) );
+
         localAccount.setZoneId( "Europe/Paris" );
-        localAccount.setEmail( "another.account@turnonline.biz" );
 
         new Expectations( localAccount )
         {
             {
-                lap.initGet( EMAIL, ACCOUNT_ID );
+                lap.initGet( ( LocalAccountProvider.Builder ) any );
                 result = localAccount;
 
                 localAccount.save();
@@ -108,25 +140,41 @@ public class AccountStewardChangesSubscriptionTest
             }
         };
 
-        PubsubMessage message = validPubsubMessage();
+        PubsubMessage message = emailChangedPubsubMessage();
         tested.onMessage( message, "account.changes" );
 
-        assertThat( localAccount.getEmail() ).isEqualTo( EMAIL );
+        assertThat( localAccount.getEmail() ).isEqualTo( EMAIL_CHANGED );
         assertThat( localAccount.getZoneId() ).isEqualTo( ZoneId.of( "Europe/Paris" ) );
         assertThat( localAccount.getLocale() ).isEqualTo( Locale.ENGLISH );
+
+        new Verifications()
+        {
+            {
+                LocalAccountProvider.Builder builder;
+                lap.initGet( builder = withCapture() );
+
+                assertThat( builder ).isNotNull();
+                assertThat( builder.accountId ).isEqualTo( ACCOUNT_ID );
+                assertThat( builder.email ).isEqualTo( EMAIL_CHANGED );
+                assertThat( builder.identityId ).isEqualTo( IDENTITY_ID );
+            }
+        };
     }
 
     @Test
     public void onMessage_ValidPubsubMessage_LocaleChanged() throws Exception
     {
-        LocalAccount localAccount = new LocalAccount( EMAIL, ACCOUNT_ID );
+        LocalAccount localAccount = new LocalAccount( new LocalAccountProvider.Builder()
+                .accountId( ACCOUNT_ID )
+                .email( EMAIL )
+                .identityId( IDENTITY_ID ) );
         localAccount.setZoneId( "Europe/Paris" );
         localAccount.setLocale( "de" );
 
         new Expectations( localAccount )
         {
             {
-                lap.initGet( EMAIL, ACCOUNT_ID );
+                lap.initGet( ( LocalAccountProvider.Builder ) any );
                 result = localAccount;
 
                 localAccount.save();
@@ -151,7 +199,7 @@ public class AccountStewardChangesSubscriptionTest
         new Verifications()
         {
             {
-                lap.initGet( anyString, anyLong );
+                lap.initGet( ( LocalAccountProvider.Builder ) any );
                 times = 0;
             }
         };
@@ -166,7 +214,7 @@ public class AccountStewardChangesSubscriptionTest
         new Verifications()
         {
             {
-                lap.initGet( anyString, anyLong );
+                lap.initGet( ( LocalAccountProvider.Builder ) any );
                 times = 0;
             }
         };
@@ -176,6 +224,13 @@ public class AccountStewardChangesSubscriptionTest
     {
         TopicMessage.Builder builder = incompletePubsubMessageBuilder( "Uninterested" );
         builder.addAttribute( ACCOUNT_EMAIL, EMAIL );
+        return builder.build().getMessages().get( 0 );
+    }
+
+    private PubsubMessage emailChangedPubsubMessage() throws IOException
+    {
+        TopicMessage.Builder builder = incompletePubsubMessageBuilder( Account.class.getSimpleName() );
+        builder.addAttribute( ACCOUNT_EMAIL, EMAIL_CHANGED );
         return builder.build().getMessages().get( 0 );
     }
 
@@ -204,6 +259,7 @@ public class AccountStewardChangesSubscriptionTest
         builder.setProjectId( "projectId-135" ).setTopicId( "a-topic" )
                 .addMessage( bytes, ACCOUNT_UNIQUE_ID, id )
                 .addAttribute( DATA_TYPE, dataType )
+                .addAttribute( ACCOUNT_IDENTITY_ID, IDENTITY_ID )
                 .addAttribute( ENCODED_UNIQUE_KEY, id );
 
         return builder;
