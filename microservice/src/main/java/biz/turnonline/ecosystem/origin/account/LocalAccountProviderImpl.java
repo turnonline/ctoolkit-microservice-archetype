@@ -36,10 +36,19 @@ public class LocalAccountProviderImpl
     public LocalAccount initGet( @Nonnull Builder builder )
     {
         checkNotNull( builder, "Builder can't be null" );
-        checkNotNull( builder.email, "Account email can't be null" );
-        checkNotNull( builder.identityId, "Account Identity ID is mandatory" );
+        checkNotNull( builder.getEmail(), "Account email can't be null" );
+        checkNotNull( builder.getIdentityId(), "Account Identity ID is mandatory" );
 
-        LocalAccount localAccount = get( builder.email );
+        LocalAccount localAccount;
+        if ( builder.getAccountId() == null )
+        {
+            localAccount = get( builder.getEmail() );
+        }
+        else
+        {
+            // Retrieval with Account ID performs better and is cheaper thus preferred
+            localAccount = get( builder.getAccountId() );
+        }
 
         if ( localAccount == null )
         {

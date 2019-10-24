@@ -43,14 +43,38 @@ public interface LocalAccountProvider
 
     class Builder
     {
-        public Long accountId;
+        private Long accountId;
 
-        public String identityId;
+        private String identityId;
 
-        public String email;
+        private String email;
 
         /**
-         * Sets the account unique identification within TurnOnline.biz Ecosystem
+         * Returns the account unique identification within TurnOnline.biz Ecosystem.
+         */
+        public Long getAccountId()
+        {
+            return accountId;
+        }
+
+        /**
+         * Returns the user account unique identification within login provider system.
+         */
+        public String getIdentityId()
+        {
+            return identityId;
+        }
+
+        /**
+         * Returns the login email address of the account.
+         */
+        public String getEmail()
+        {
+            return email;
+        }
+
+        /**
+         * Sets the account unique identification within TurnOnline.biz Ecosystem.
          */
         public Builder accountId( @Nonnull Long accountId )
         {
@@ -68,7 +92,7 @@ public interface LocalAccountProvider
         }
 
         /**
-         * Sets the login email address of the account
+         * Sets the login email address of the account.
          */
         public Builder email( @Nonnull String email )
         {

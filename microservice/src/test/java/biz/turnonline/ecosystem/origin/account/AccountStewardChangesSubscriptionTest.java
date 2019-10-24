@@ -83,9 +83,9 @@ public class AccountStewardChangesSubscriptionTest
                 lap.initGet( builder = withCapture() );
 
                 assertThat( builder ).isNotNull();
-                assertThat( builder.accountId ).isEqualTo( ACCOUNT_ID );
-                assertThat( builder.email ).isEqualTo( EMAIL );
-                assertThat( builder.identityId ).isEqualTo( IDENTITY_ID );
+                assertThat( builder.getAccountId() ).isEqualTo( ACCOUNT_ID );
+                assertThat( builder.getEmail() ).isEqualTo( EMAIL );
+                assertThat( builder.getIdentityId() ).isEqualTo( IDENTITY_ID );
             }
         };
     }
@@ -154,9 +154,9 @@ public class AccountStewardChangesSubscriptionTest
                 lap.initGet( builder = withCapture() );
 
                 assertThat( builder ).isNotNull();
-                assertThat( builder.accountId ).isEqualTo( ACCOUNT_ID );
-                assertThat( builder.email ).isEqualTo( EMAIL_CHANGED );
-                assertThat( builder.identityId ).isEqualTo( IDENTITY_ID );
+                assertThat( builder.getAccountId() ).isEqualTo( ACCOUNT_ID );
+                assertThat( builder.getEmail() ).isEqualTo( EMAIL_CHANGED );
+                assertThat( builder.getIdentityId() ).isEqualTo( IDENTITY_ID );
             }
         };
     }

@@ -72,9 +72,9 @@ public class LocalAccount
     LocalAccount( @Nonnull LocalAccountProvider.Builder builder )
     {
         checkNotNull( builder, "Builder can't be null" );
-        this.email = checkNotNull( builder.email, "Account email is mandatory" );
-        this.identityId = checkNotNull( builder.identityId, "Account Identity ID is mandatory" );
-        super.setId( builder.accountId );
+        this.email = checkNotNull( builder.getEmail(), "Account email is mandatory" );
+        this.identityId = checkNotNull( builder.getIdentityId(), "Account Identity ID is mandatory" );
+        super.setId( builder.getAccountId() );
     }
 
     /**

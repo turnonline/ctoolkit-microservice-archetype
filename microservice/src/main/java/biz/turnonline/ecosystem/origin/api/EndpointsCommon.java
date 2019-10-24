@@ -6,7 +6,6 @@ import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.response.InternalServerErrorException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
-import org.ctoolkit.restapi.client.RestFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,13 +24,10 @@ class EndpointsCommon
 
     private final LocalAccountProvider lap;
 
-    private final RestFacade facade;
-
     @Inject
-    EndpointsCommon( LocalAccountProvider lap, RestFacade facade )
+    EndpointsCommon( LocalAccountProvider lap )
     {
         this.lap = lap;
-        this.facade = facade;
     }
 
     static String tryAgainLaterMessage()
