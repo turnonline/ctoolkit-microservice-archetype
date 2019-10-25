@@ -1,6 +1,7 @@
 package biz.turnonline.ecosystem.origin.account;
 
 import biz.turnonline.ecosystem.origin.service.LocalAccountProvider;
+import biz.turnonline.ecosystem.steward.facade.Domicile;
 import biz.turnonline.ecosystem.steward.model.Account;
 import biz.turnonline.ecosystem.steward.model.AccountBusiness;
 import com.google.common.base.MoreObjects;
@@ -37,9 +38,9 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 public class LocalAccount
         extends EntityLongIdentity
 {
-    private static final Locale DEFAULT_LOCALE = new Locale( "en" );
+    private static final Locale DEFAULT_LOCALE = Domicile.getDefault().getLocale();
 
-    private static final String DEFAULT_DOMICILE = "SK";
+    private static final String DEFAULT_DOMICILE = Domicile.getDefault().name();
 
     private static final Logger LOGGER = LoggerFactory.getLogger( LocalAccount.class );
 
@@ -101,7 +102,11 @@ public class LocalAccount
     void init( @Nonnull RestFacade facade )
     {
         Account account = getAccount( facade );
+        init( account );
+    }
 
+    private void init( @Nonnull Account account )
+    {
         super.setId( account.getId() );
         this.email = account.getEmail();
         this.identityId = account.getIdentityId();
@@ -202,7 +207,7 @@ public class LocalAccount
     }
 
     /**
-     * Returns the time-zone ID, such as Europe/Paris. Used to identify the rules
+     * Returns the account time-zone ID, such as Europe/Paris. Used to identify the rules
      * how to render date time properties of the resources associated with this account.
      *
      * @return the time-zone ID
@@ -223,7 +228,7 @@ public class LocalAccount
     }
 
     /**
-     * Returns the final locale based preferable on {@link Account#getLocale()}. Always returns a value.
+     * Returns the account locale. Always returns a value.
      * If none of the values has been found a {@link #DEFAULT_LOCALE} will be returned.
      *
      * @return the final locale, ISO 639 alpha-2 or alpha-3 language code
@@ -244,7 +249,7 @@ public class LocalAccount
     }
 
     /**
-     * Returns the final locale based preferable on {@link Account#getLocale()} with specified preference.
+     * Returns the account locale with specified preference.
      * Always returns a value. If none of the values has been found a {@link #DEFAULT_LOCALE} will be returned.
      *
      * @param locale the optional however preferred language
@@ -272,9 +277,10 @@ public class LocalAccount
      * If none domicile value found a {@link #DEFAULT_DOMICILE} will be returned.
      *
      * @param domicile the optional (preferred) ISO 3166 alpha-2 country code that represents a target domicile
-     * @return the final domicile
+     * @return the account domicile or default
+     * @throws IllegalArgumentException if domicile value is none of the supported {@link Domicile}
      */
-    public String getDomicile( @Nullable String domicile )
+    public Domicile getDomicile( @Nullable String domicile )
     {
         if ( domicile == null )
         {
@@ -288,7 +294,7 @@ public class LocalAccount
                 domicile = this.domicile;
             }
         }
-        return domicile.toUpperCase();
+        return Domicile.valueOf( domicile.toUpperCase() );
     }
 
     /**
@@ -296,14 +302,11 @@ public class LocalAccount
      * If none domicile value found a {@link #DEFAULT_DOMICILE} will be returned.
      *
      * @return the account domicile or default
+     * @throws IllegalArgumentException if domicile value is none of the supported {@link Domicile}
      */
-    public String getDomicile()
+    public Domicile getDomicile()
     {
-        if ( Strings.isNullOrEmpty( domicile ) )
-        {
-            return DEFAULT_DOMICILE;
-        }
-        return domicile;
+        return getDomicile( null );
     }
 
     /**
