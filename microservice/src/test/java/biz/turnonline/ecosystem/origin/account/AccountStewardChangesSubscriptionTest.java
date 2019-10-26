@@ -54,6 +54,8 @@ public class AccountStewardChangesSubscriptionTest
                 .identityId( IDENTITY_ID ) );
 
         localAccount.setZoneId( "Europe/Paris" );
+        localAccount.setLocale( "en" );
+        localAccount.setDomicile( "SK" );
 
         new Expectations( localAccount )
         {
@@ -74,7 +76,7 @@ public class AccountStewardChangesSubscriptionTest
         assertThat( localAccount.getIdentityId() ).isEqualTo( IDENTITY_ID );
         assertThat( localAccount.getZoneId() ).isEqualTo( ZoneId.of( "Europe/Paris" ) );
         assertThat( localAccount.getLocale() ).isEqualTo( Locale.ENGLISH );
-        assertThat( localAccount.getDomicile() ).isEqualTo( "SK" );
+        assertThat( localAccount.getDomicile().name() ).isEqualTo( "SK" );
 
         new Verifications()
         {
