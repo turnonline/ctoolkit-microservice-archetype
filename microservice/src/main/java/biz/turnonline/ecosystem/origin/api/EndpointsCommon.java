@@ -61,7 +61,7 @@ class EndpointsCommon
         }
         catch ( org.ctoolkit.restapi.client.NotFoundException e )
         {
-            throw new NotFoundException( "TurnOnline.biz Ecosystem account not found for " + authUser.getEmail() );
+            throw new NotFoundException( "TurnOnline.biz Ecosystem account not found for Identity ID " + authUser.getId() );
         }
         catch ( Exception e )
         {

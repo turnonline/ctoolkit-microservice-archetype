@@ -28,7 +28,7 @@ import static biz.turnonline.ecosystem.origin.api.EndpointsApiProfile.PROJECT_ID
         description = "Example REST API",
         documentationLink = "https://developers.turnonline.biz/docs",
         namespace = @ApiNamespace( ownerDomain = "turnonline.biz", ownerName = "TurnOnline.biz, Ltd." ),
-        authenticators = {GoogleOAuth2Authenticator.class, EspAuthenticator.class},
+        authenticators = {EspAuthenticator.class, GoogleOAuth2Authenticator.class},
         issuers = {
                 @ApiIssuer(
                         name = "firebase",
