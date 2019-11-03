@@ -20,6 +20,7 @@ import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.ACCOUNT_EMAIL;
 import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.ACCOUNT_IDENTITY_ID;
 import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.ACCOUNT_UNIQUE_ID;
 import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.DATA_TYPE;
+import static org.ctoolkit.restapi.client.pubsub.PubsubCommand.ENCODED_UNIQUE_KEY;
 
 /**
  * The 'account.changes' subscription listener implementation.
@@ -53,7 +54,7 @@ public class AccountStewardChangesSubscription
     public void onMessage( @Nonnull PubsubMessage message, @Nonnull String subscription ) throws Exception
     {
         PubsubCommand command = new PubsubCommand( message );
-        String[] mandatory = {DATA_TYPE, ACCOUNT_UNIQUE_ID, ACCOUNT_EMAIL, ACCOUNT_IDENTITY_ID};
+        String[] mandatory = {DATA_TYPE, ENCODED_UNIQUE_KEY, ACCOUNT_UNIQUE_ID, ACCOUNT_EMAIL, ACCOUNT_IDENTITY_ID};
         if ( !command.validate( mandatory ) )
         {
             LOGGER.error( "Some of the mandatory attributes "
@@ -70,22 +71,33 @@ public class AccountStewardChangesSubscription
             return;
         }
 
-        String remoteLoginEmail = command.getAccountEmail();
         Long accountId = command.getAccountId();
-        String identityId = command.getAccountIdentityId();
         String data = message.getData();
         boolean signUp = command.isAccountSignUp();
 
-        LOGGER.info( "[" + subscription + "] Account has been received with length: "
-                + data.length() + " and unique ID: '" + accountId
-                + "'. Is new account sign-up: " + signUp );
+        LOGGER.info( "[" + subscription + "] " + dataType + " has been received at publish time "
+                + message.getPublishTime()
+                + " with length: "
+                + data.length()
+                + " and unique ID: '"
+                + accountId
+                + "'. Is new account sign-up: "
+                + signUp );
 
         Account account = fromString( data, Account.class );
         LocalAccount localAccount = lap.initGet( new LocalAccountProvider.Builder()
                 .accountId( accountId )
-                .email( remoteLoginEmail )
-                .identityId( identityId ) );
+                .email( command.getAccountEmail() )
+                .identityId( command.getAccountIdentityId() ) );
 
+        if ( Account.class.getSimpleName().equals( dataType ) )
+        {
+            process( localAccount, account );
+        }
+    }
+
+    private void process( @Nonnull LocalAccount localAccount, @Nonnull Account account )
+    {
         boolean updateAccount = false;
 
         // Current, the most up to date Zone ID, taken from the remote account
@@ -100,6 +112,7 @@ public class AccountStewardChangesSubscription
         }
 
         // Current, the most up to date login email, taken from the remote account
+        String remoteLoginEmail = account.getEmail();
         if ( !remoteLoginEmail.equalsIgnoreCase( localAccount.getEmail() ) )
         {
             LOGGER.info( "Login Email has changed from '" + localAccount.getEmail() + "' to '" + remoteLoginEmail + "'" );

@@ -60,6 +60,7 @@ public class AccountStewardChangesSubscriptionTest
         new Expectations( localAccount )
         {
             {
+                //noinspection ConstantConditions
                 lap.initGet( ( LocalAccountProvider.Builder ) any );
                 result = localAccount;
 
@@ -105,6 +106,7 @@ public class AccountStewardChangesSubscriptionTest
         new Expectations( localAccount )
         {
             {
+                //noinspection ConstantConditions
                 lap.initGet( ( LocalAccountProvider.Builder ) any );
                 result = localAccount;
 
@@ -134,6 +136,7 @@ public class AccountStewardChangesSubscriptionTest
         new Expectations( localAccount )
         {
             {
+                //noinspection ConstantConditions
                 lap.initGet( ( LocalAccountProvider.Builder ) any );
                 result = localAccount;
 
@@ -176,6 +179,7 @@ public class AccountStewardChangesSubscriptionTest
         new Expectations( localAccount )
         {
             {
+                //noinspection ConstantConditions
                 lap.initGet( ( LocalAccountProvider.Builder ) any );
                 result = localAccount;
 
@@ -201,6 +205,7 @@ public class AccountStewardChangesSubscriptionTest
         new Verifications()
         {
             {
+                //noinspection ConstantConditions
                 lap.initGet( ( LocalAccountProvider.Builder ) any );
                 times = 0;
             }
@@ -216,6 +221,7 @@ public class AccountStewardChangesSubscriptionTest
         new Verifications()
         {
             {
+                //noinspection ConstantConditions
                 lap.initGet( ( LocalAccountProvider.Builder ) any );
                 times = 0;
             }
@@ -231,7 +237,9 @@ public class AccountStewardChangesSubscriptionTest
 
     private PubsubMessage emailChangedPubsubMessage() throws IOException
     {
-        TopicMessage.Builder builder = incompletePubsubMessageBuilder( Account.class.getSimpleName() );
+        TopicMessage.Builder builder = incompletePubsubMessageBuilder( Account.class.getSimpleName(),
+                "account-email-changed.json" );
+
         builder.addAttribute( ACCOUNT_EMAIL, EMAIL_CHANGED );
         return builder.build().getMessages().get( 0 );
     }
@@ -253,7 +261,15 @@ public class AccountStewardChangesSubscriptionTest
      */
     private TopicMessage.Builder incompletePubsubMessageBuilder( String dataType ) throws IOException
     {
-        InputStream stream = getClass().getResourceAsStream( "account.json" );
+        return incompletePubsubMessageBuilder( dataType, "account.json" );
+    }
+
+    /**
+     * {@link PubsubCommand#ACCOUNT_EMAIL} is missing to be valid {@link Account} Pub/Sub message.
+     */
+    private TopicMessage.Builder incompletePubsubMessageBuilder( String dataType, String json ) throws IOException
+    {
+        InputStream stream = getClass().getResourceAsStream( json );
         byte[] bytes = ByteStreams.toByteArray( stream );
 
         TopicMessage.Builder builder = TopicMessage.newBuilder();
