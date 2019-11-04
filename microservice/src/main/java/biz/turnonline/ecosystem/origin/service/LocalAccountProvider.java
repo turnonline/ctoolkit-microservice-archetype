@@ -21,7 +21,7 @@ public interface LocalAccountProvider
      *
      * @param builder mandatory properties are: email, identityId {@link Builder#email}, {@link Builder#identityId}
      * @return the local lightweight account
-     * @throws NotFoundException if remote account has not been found for specified email and ID
+     * @throws NotFoundException if remote account has not been found for specified Identity ID or Account ID
      */
     LocalAccount initGet( @Nonnull Builder builder );
 

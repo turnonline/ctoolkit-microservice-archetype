@@ -1,6 +1,5 @@
 package biz.turnonline.ecosystem.origin.service;
 
-import biz.turnonline.ecosystem.origin.account.AccountStewardChangesSubscription;
 import biz.turnonline.ecosystem.origin.account.LocalAccount;
 import biz.turnonline.ecosystem.origin.account.LocalAccountProviderImpl;
 import biz.turnonline.ecosystem.origin.cache.RemoteAccountCache;
@@ -19,7 +18,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
 import org.ctoolkit.restapi.client.PubSub;
 import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeAppEngineModule;
 import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeDefaultOrikaModule;
@@ -48,13 +46,10 @@ public class MicroserviceModule
         install( new CtoolkitRestFacadeDefaultOrikaModule() );
         install( new AccountStewardClientModule() );
         install( new AccountStewardAdapterModule() );
+        install( new SubscriptionsModule() );
 
         bind( GuicefiedOfyFactory.class ).asEagerSingleton();
         bind( LocalAccountProvider.class ).to( LocalAccountProviderImpl.class );
-
-        MapBinder<String, PubsubMessageListener> map;
-        map = MapBinder.newMapBinder( binder(), String.class, PubsubMessageListener.class );
-        map.addBinding( "account.changes" ).to( AccountStewardChangesSubscription.class );
 
         // will be interpreted by REST Facade
         bind( new TypeLiteral<LocalResourceProvider<Account>>()
