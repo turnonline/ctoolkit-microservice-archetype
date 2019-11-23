@@ -1,8 +1,9 @@
 package biz.turnonline.ecosystem.origin.guice;
 
+import biz.turnonline.ecosystem.origin.service.MicroserviceModule;
+import biz.turnonline.ecosystem.origin.service.StorageModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import biz.turnonline.ecosystem.origin.service.MicroserviceModule;
 import org.ctoolkit.services.endpoints.EndpointsMonitorConfig;
 import org.ctoolkit.services.guice.AppEngineEnvironmentContextListener;
 
@@ -17,13 +18,16 @@ public class GuiceInjectorListener
     @Override
     protected Injector getDevelopmentInjector()
     {
-        return Guice.createInjector( new MicroserviceModule(), new EndpointsInitialization() );
+        return Guice.createInjector( new MicroserviceModule(),
+                new StorageModule(),
+                new EndpointsInitialization() );
     }
 
     @Override
     protected Injector getProductionInjector()
     {
         return Guice.createInjector( new MicroserviceModule(),
+                new StorageModule(),
                 new EndpointsInitialization(),
                 new EndpointsMonitorConfig() );
     }

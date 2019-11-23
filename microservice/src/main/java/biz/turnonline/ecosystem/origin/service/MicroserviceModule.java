@@ -24,7 +24,6 @@ import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeDefaultOrikaModul
 import org.ctoolkit.restapi.client.provider.LocalResourceProvider;
 import org.ctoolkit.restapi.client.provider.TokenProvider;
 import org.ctoolkit.restapi.client.pubsub.PubsubMessageListener;
-import org.ctoolkit.services.storage.guice.GuicefiedOfyFactory;
 
 import javax.inject.Singleton;
 import java.io.IOException;
@@ -48,7 +47,6 @@ public class MicroserviceModule
         install( new AccountStewardAdapterModule() );
         install( new SubscriptionsModule() );
 
-        bind( GuicefiedOfyFactory.class ).asEagerSingleton();
         bind( LocalAccountProvider.class ).to( LocalAccountProviderImpl.class );
 
         // will be interpreted by REST Facade
