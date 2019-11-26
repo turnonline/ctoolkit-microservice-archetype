@@ -2,9 +2,6 @@ package biz.turnonline.ecosystem.origin.service;
 
 import com.google.appengine.tools.development.testing.LocalServiceTestConfig;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
-
 /**
  * {@link LocalObjectifyHelper} wrapper aground {@link LocalServiceTestConfig}.
  *
@@ -37,7 +34,7 @@ class LocalObjectifyHelperTestConfig
      *
      * <p>Currently the emulator does not persist any state across runs.
      */
-    void start() throws IOException, InterruptedException
+    void start()
     {
         helper.start();
     }
@@ -45,7 +42,7 @@ class LocalObjectifyHelperTestConfig
     /**
      * Stops the Datastore emulator.
      */
-    void stop() throws InterruptedException, TimeoutException, IOException
+    void stop()
     {
         helper.stop();
     }

@@ -12,6 +12,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Local Objectify Google Datastore helper, a configuration to initialize local datastore emulator.
  *
@@ -27,11 +29,10 @@ class LocalObjectifyHelper
     private Closeable session;
 
     @Inject
-    LocalObjectifyHelper( GuicefiedOfyFactory ofyFactory,
-                          LocalDatastoreHelper lDatastoreHelper )
+    LocalObjectifyHelper( GuicefiedOfyFactory ofyFactory, LocalDatastoreHelper helper )
     {
-        this.ofyFactory = ofyFactory;
-        this.lDatastoreHelper = lDatastoreHelper;
+        this.ofyFactory = checkNotNull( ofyFactory );
+        this.lDatastoreHelper = checkNotNull( helper );
     }
 
     void reset()
@@ -78,16 +79,30 @@ class LocalObjectifyHelper
      *
      * <p>Currently the emulator does not persist any state across runs.
      */
-    void start() throws IOException, InterruptedException
+    void start()
     {
-        lDatastoreHelper.start();
+        try
+        {
+            lDatastoreHelper.start();
+        }
+        catch ( IOException | InterruptedException e )
+        {
+            throw new RuntimeException( e );
+        }
     }
 
     /**
      * Stops the Datastore emulator.
      */
-    void stop() throws InterruptedException, TimeoutException, IOException
+    void stop()
     {
-        lDatastoreHelper.stop();
+        try
+        {
+            lDatastoreHelper.stop();
+        }
+        catch ( IOException | InterruptedException | TimeoutException e )
+        {
+            throw new RuntimeException( e );
+        }
     }
 }

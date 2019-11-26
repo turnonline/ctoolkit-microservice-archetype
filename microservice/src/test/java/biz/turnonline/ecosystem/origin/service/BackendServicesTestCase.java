@@ -24,7 +24,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * The base class for App Engine backend services local testing.
@@ -159,14 +158,14 @@ public class BackendServicesTestCase
     }
 
     @BeforeSuite
-    public void start() throws IOException, InterruptedException
+    public void start()
     {
         SystemProperty.environment.set( "Development" );
         ofyHelper.start();
     }
 
     @AfterSuite
-    public void stop() throws InterruptedException, TimeoutException, IOException
+    public void stop()
     {
         ofyHelper.stop();
     }
