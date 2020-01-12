@@ -13,7 +13,7 @@
     <version>1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>TurnOnline.biz Ecosystem Microservice Parent</name>
-    <description>TurnOnline.biz Ecosystem: Cloud Toolkit Microservice Archetype Parent</description>
+    <description>TurnOnline.biz Ecosystem: Serverless Microservice Archetype Parent</description>
     <url>https://developers.turnonline.biz</url>
 
     <scm>
