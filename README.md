@@ -10,7 +10,7 @@ If you don't know yet what is your **_ProjectId_** and **_MyServiceName_** no pr
     mvn archetype:generate \
      -DarchetypeGroupId=biz.turnonline.ecosystem \
      -DarchetypeArtifactId=turnonline-ecosystem-microservice-archetype \
-     -DarchetypeVersion=1.2
+     -DarchetypeVersion=1.3
 ```
 
 ### ProjectId
