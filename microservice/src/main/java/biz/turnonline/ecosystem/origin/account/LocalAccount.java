@@ -243,7 +243,7 @@ public class LocalAccount
      *
      * @param locale the language to be set
      */
-    public void setLocale( String locale )
+    void setLocale( String locale )
     {
         this.locale = locale;
     }
@@ -253,7 +253,7 @@ public class LocalAccount
      * Always returns a value. If none of the values has been found a {@link #DEFAULT_LOCALE} will be returned.
      *
      * @param locale the optional however preferred language
-     * @return the final locale
+     * @return the final locale, ISO 639 alpha-2 or alpha-3 language code
      */
     public Locale getLocale( @Nullable Locale locale )
     {
