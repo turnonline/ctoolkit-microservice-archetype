@@ -23,7 +23,7 @@ import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeAppEngineModule;
 import org.ctoolkit.restapi.client.appengine.CtoolkitRestFacadeDefaultOrikaModule;
 import org.ctoolkit.restapi.client.provider.LocalResourceProvider;
 import org.ctoolkit.restapi.client.provider.TokenProvider;
-import org.ctoolkit.restapi.client.pubsub.PubsubMessageListener;
+import org.ctoolkit.restapi.client.pubsub.PubsubCommand;
 
 import javax.inject.Singleton;
 import java.io.IOException;
@@ -87,7 +87,7 @@ public class MicroserviceModule
     ObjectMapper provideJsonObjectMapperPubSub()
     {
         ObjectMapper mapper = baseObjectMapper();
-        mapper.setDateFormat( new SimpleDateFormat( PubsubMessageListener.PUB_SUB_DATE_FORMAT ) );
+        mapper.setDateFormat( new SimpleDateFormat( PubsubCommand.PUB_SUB_DATE_FORMAT ) );
 
         return mapper;
     }

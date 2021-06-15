@@ -109,7 +109,6 @@ public class LocalAccount
     {
         super.setId( account.getId() );
         this.email = account.getEmail();
-        this.identityId = account.getIdentityId();
         this.locale = account.getLocale();
 
         AccountBusiness business = account.getBusiness();

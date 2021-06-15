@@ -85,7 +85,7 @@ public class AccountStewardChangesSubscription
                 + "'. Is new account sign-up: "
                 + signUp );
 
-        Account account = fromString( data, Account.class );
+        Account account = PubsubCommand.fromString( data, Account.class );
         LocalAccount localAccount = lap.initGet( new LocalAccountProvider.Builder()
                 .accountId( accountId )
                 .email( command.getAccountEmail() )
